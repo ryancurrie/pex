@@ -4,7 +4,9 @@
   "description": "A real time time sweepstakes web app",
   "main": "server/index.js",
   "scripts": {
-    "watch:server": "nodemon ."
+    "watch:server": "nodemon .",
+    "watch:client":
+      "watchify client/index.js -t babelify -o server/public/main.js"
   },
   "repository": {
     "type": "git",
@@ -19,8 +21,14 @@
   "homepage": "https://github.com/ryancurrie/pex#readme",
   "dependencies": {
     "express": "^4.16.2",
+    "lodash": "^4.17.4",
     "path": "^0.12.7",
-    "socket.io": "^2.0.4"
+    "project-name-generator": "^2.1.4",
+    "socket.io": "^2.0.4",
+    "uuid": "^3.1.0",
+    "react": "^16.0.0",
+    "react-dom": "^16.0.0",
+    "react-router-dom": "^4.2.2"
   },
   "devDependencies": {
     "nodemon": "^1.12.1",
@@ -35,6 +43,12 @@
     "husky": "0.14.3",
     "npm-run-all": "4.1.1",
     "stylelint": "8.0.0",
-    "stylelint-config-standard": "17.0.0"
+    "stylelint-config-standard": "17.0.0",
+    "browserify": "^14.5.0",
+    "watchify": "^3.9.0",
+    "babel-core": "^6.26.0",
+    "babel-plugin-transform-es2015-modules-commonjs": "^6.26.0",
+    "babel-plugin-transform-react-jsx": "^6.24.1",
+    "babelify": "^8.0.0"
   }
 }
