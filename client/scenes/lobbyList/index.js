@@ -23,8 +23,10 @@ export default class Lobbies extends Component {
   }
 
   render() {
-    if (this.state.lobbiesLoaded) {
-      console.log(this.state.lobbies)
+    if (!this.state.lobbiesLoaded) {
+      return null
+    }
+    else {
       return (
         <div className="col text-center">
           <div className="row" style={styles}>
@@ -35,9 +37,6 @@ export default class Lobbies extends Component {
           </div>
         </div>
       )
-    }
-    else {
-      return null
     }
   }
 }
