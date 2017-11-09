@@ -1,0 +1,40 @@
+{
+  "name": "pex",
+  "version": "1.0.0",
+  "description": "A real time time sweepstakes web app",
+  "main": "server/index.js",
+  "scripts": {
+    "watch:server": "nodemon ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ryancurrie/pex.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ryancurrie/pex/issues"
+  },
+  "homepage": "https://github.com/ryancurrie/pex#readme",
+  "dependencies": {
+    "express": "^4.16.2",
+    "path": "^0.12.7",
+    "socket.io": "^2.0.4"
+  },
+  "devDependencies": {
+    "nodemon": "^1.12.1",
+    "eslint": "4.5.0",
+    "eslint-config-standard": "10.2.1",
+    "eslint-plugin-import": "2.7.0",
+    "eslint-plugin-node": "5.1.1",
+    "eslint-plugin-promise": "3.5.0",
+    "eslint-plugin-react": "7.3.0",
+    "eslint-plugin-standard": "3.0.1",
+    "htmlhint": "0.9.13",
+    "husky": "0.14.3",
+    "npm-run-all": "4.1.1",
+    "stylelint": "8.0.0",
+    "stylelint-config-standard": "17.0.0"
+  }
+}
