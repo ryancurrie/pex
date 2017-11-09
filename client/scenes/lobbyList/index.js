@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import SocketIOClient from 'socket.io-client'
+import LobbyList from './components/lobby-list'
 
 export default class Lobbies extends Component {
   constructor(props) {
@@ -21,14 +22,17 @@ export default class Lobbies extends Component {
     })
   }
 
-  componentWillUnmount() {}
-
   render() {
     if (this.state.lobbiesLoaded) {
       console.log(this.state.lobbies)
       return (
-        <div>
-          <h1>Choose a lobby</h1>
+        <div className="col text-center">
+          <div className="row" style={styles}>
+            <span>Choose a lobby</span>
+          </div>
+          <div className="row">
+            <LobbyList lobbies={this.state.lobbies} />
+          </div>
         </div>
       )
     }
@@ -36,4 +40,8 @@ export default class Lobbies extends Component {
       return null
     }
   }
+}
+
+const styles = {
+  marginBottom: '1.5em'
 }
