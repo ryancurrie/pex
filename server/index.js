@@ -11,11 +11,7 @@ app.use(express.static(path.join(__dirname, 'public')))
 const server = http.createServer(app)
 const io = IO(server)
 
-const lobbies = []
-
-if (lobbies.length === 0) {
-  lobbies.push(new Lobby())
-}
+const lobbies = [new Lobby()]
 
 io.on('connect', socket => {
   socket.on('get-lobbies', () => {
