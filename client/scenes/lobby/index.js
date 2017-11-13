@@ -4,6 +4,7 @@ import { upperCase } from 'lodash'
 import TimeLeft from './components/time-left'
 import Jackpot from './components/jackpot'
 import LobbyUpdates from './components/lobby-updates'
+import LobbyFooter from './components/lobby-footer'
 
 export default class Lobby extends Component {
   constructor(props) {
@@ -46,9 +47,7 @@ export default class Lobby extends Component {
           </div>
         </div>
         <div className="row">
-          <div className="col text-center">
-            <p>asldkfjskljf alskfdjalsk;jf aslkasjf askljfsda asdl;kfjasdf.</p>
-          </div>
+          <LobbyFooter />
         </div>
       </div>
     )
