@@ -2,6 +2,7 @@ const path = require('path')
 const express = require('express')
 const IO = require('socket.io')
 const http = require('http')
+const shortid = require('shortid')
 const Lobby = require('./scripts/lobby')
 
 const app = express()
@@ -22,7 +23,12 @@ io.on('connect', socket => {
 
   socket.on('join', room => {
     socket.join(room)
-    io.sockets.in(room).emit('test', 'test')
+    io.sockets
+      .in(room)
+      .emit('playerJoin', {
+        id: shortid.generate(),
+        msg: 'A new player has joined the room'
+      })
   })
 })
 
