@@ -1,5 +1,8 @@
 import React, { Component } from 'react'
 import SocketIOClient from 'socket.io-client'
+import { upperCase } from 'lodash'
+import TimeLeft from './components/time-left'
+import Jackpot from './components/jackpot'
 import LobbyUpdates from './components/lobby-updates'
 
 export default class Lobby extends Component {
@@ -8,7 +11,9 @@ export default class Lobby extends Component {
     this.state = {
       connected: false,
       room: props.match.params.name,
-      updates: []
+      updates: [],
+      timeLeft: null,
+      jackpot: 0
     }
     this.socket = SocketIOClient('http://localhost:3000')
   }
@@ -24,17 +29,27 @@ export default class Lobby extends Component {
   render() {
     return (
       <div>
-        <div className="row">
-          <div className="col text-center">{this.state.room}</div>
+        <div className="row" style={styles}>
+          <div className="col text-center">{upperCase(this.state.room)}</div>
         </div>
-        <div className="row">
-          <div className="col float-left">Time left:</div>
-          <div className="col float-right">Jackpot</div>
+        <div className="row" style={styles}>
+          <div className="col float-left">
+            <TimeLeft time={this.state.timeLeft} />
+          </div>
+          <div className="col">
+            <Jackpot jackpot={this.state.jackpot} />
+          </div>
         </div>
-        <div className="row">
-          <LobbyUpdates updates={this.state.updates} />
+        <div className="row" style={styles}>
+          <div className="col text-center">
+            <LobbyUpdates updates={this.state.updates} />
+          </div>
         </div>
       </div>
     )
   }
+}
+
+const styles = {
+  marginBottom: '1.5em'
 }
