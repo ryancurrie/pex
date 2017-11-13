@@ -9,7 +9,7 @@ const renderUpdate = ({ id, msg }) => (
 const LobbyUpdates = ({ updates }) => {
   return (
     <div>
-      <ul className="list-group">{updates.map(renderUpdate)}</ul>
+      <ul className="list-group">{updates.reverse().map(renderUpdate)}</ul>
     </div>
   )
 }

@@ -13,5 +13,6 @@ const Header = () => {
 module.exports = Header
 
 const styles = {
+  marginTop: '1em',
   marginBottom: '1.5em'
 }

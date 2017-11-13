@@ -29,10 +29,10 @@ export default class Lobby extends Component {
   render() {
     return (
       <div>
-        <div className="row" style={styles}>
+        <div className="row" style={styles.column}>
           <div className="col text-center">{upperCase(this.state.room)}</div>
         </div>
-        <div className="row" style={styles}>
+        <div className="row" style={styles.column}>
           <div className="col float-left">
             <TimeLeft time={this.state.timeLeft} />
           </div>
@@ -40,9 +40,14 @@ export default class Lobby extends Component {
             <Jackpot jackpot={this.state.jackpot} />
           </div>
         </div>
-        <div className="row" style={styles}>
-          <div className="col text-center">
+        <div className="row" style={styles.column}>
+          <div className="col text-center" style={styles.updates}>
             <LobbyUpdates updates={this.state.updates} />
+          </div>
+        </div>
+        <div className="row">
+          <div className="col text-center">
+            <p>asldkfjskljf alskfdjalsk;jf aslkasjf askljfsda asdl;kfjasdf.</p>
           </div>
         </div>
       </div>
@@ -51,5 +56,14 @@ export default class Lobby extends Component {
 }
 
 const styles = {
-  marginBottom: '1.5em'
+  column: {
+    marginBottom: '1.5em'
+  },
+  updates: {
+    height: '300px',
+    marginBottom: '1.5em',
+    overflowY: 'scroll',
+    overflowScrolling: 'touch',
+    WebkitOverflowScrolling: 'touch'
+  }
 }
