@@ -28,6 +28,11 @@ io.on('connect', socket => {
     lobbies[0].playerJoin(socket.id)
   })
 
+  socket.on('leave', room => {
+    socket.leave(room)
+    lobbies[0].playerLeave(socket.id)
+  })
+
   socket.on('get-lobby', () => {
     socket.emit('return-lobby', lobbies[0])
   })

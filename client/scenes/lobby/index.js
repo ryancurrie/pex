@@ -29,6 +29,13 @@ export default class Lobby extends Component {
     this.socket.on('playerJoin', update => {
       this.setState({ updates: this.state.updates.concat(update) })
     })
+    this.socket.on('playerLeave', update => {
+      this.setState({ updates: this.state.updates.concat(update) })
+    })
+  }
+
+  componentWillUnmount() {
+    this.socket.emit('leave', this.state.room)
   }
 
   render() {

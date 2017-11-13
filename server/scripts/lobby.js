@@ -24,6 +24,19 @@ module.exports = class Lobby {
     this.io.in(this.lobbySlug).emit('playerJoin', update)
   }
 
+  playerLeave(id) {
+    const index = this.lobbyPlayers.indexOf(id)
+    if (index > -1) {
+      const update = {
+        id: shortid.generate(),
+        msg: `${id} has left the room`
+      }
+      this.lobbyPlayers.splice(index, 1)
+      this.updates.push(update)
+      this.io.in(this.lobbySlug).emit('playerLeave', update)
+    }
+  }
+
   toJSON() {
     return {
       id: this.id,
