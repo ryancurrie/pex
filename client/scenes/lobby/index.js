@@ -12,6 +12,7 @@ export default class Lobby extends Component {
     this.state = {
       connected: false,
       room: props.match.params.name,
+      lobby: {},
       updates: [],
       timeLeft: null,
       jackpot: 0
@@ -21,9 +22,12 @@ export default class Lobby extends Component {
 
   componentDidMount() {
     this.socket.emit('join', this.state.room)
+    this.socket.emit('get-lobby', this.state.room)
+    this.socket.on('return-lobby', lobby => {
+      this.setState({ lobby: lobby, updates: lobby.updates })
+    })
     this.socket.on('playerJoin', update => {
       this.setState({ updates: this.state.updates.concat(update) })
-      console.log(this.state.updates)
     })
   }
 
