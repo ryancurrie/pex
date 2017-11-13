@@ -7,6 +7,7 @@ module.exports = class Lobby {
     this.id = uuid()
     this.lobbyName = _.startCase(generate({ alliterative: true }).dashed)
     this.lobbyURI = '/' + _.kebabCase(this.lobbyName)
+    this.lobbySlug = _.kebabCase(this.lobbyName)
     this.lobbyPlayers = []
     this.full = false
   }

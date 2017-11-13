@@ -12,11 +12,17 @@ const server = http.createServer(app)
 const io = IO(server)
 
 const lobbies = [new Lobby()]
+const room = lobbies[0].lobbySlug
+console.log(room)
 
 io.on('connect', socket => {
   socket.on('get-lobbies', () => {
-    console.log('sent lobbies')
     socket.emit('return-lobbies', lobbies)
+  })
+
+  socket.on('join', room => {
+    socket.join(room)
+    io.sockets.in(room).emit('test', 'test')
   })
 })
 
