@@ -8,7 +8,12 @@ export default class Home extends Component {
     const response = await axios.post('/api/createuser', {
       username: formData.get('username')
     })
-    console.log(response.data)
+    const { username, pinkPex, bluePex, id, roundsWon } = response.data
+    localStorage.setItem('id', id)
+    localStorage.setItem('username', username)
+    localStorage.setItem('pinkPex', pinkPex)
+    localStorage.setItem('bluePex', bluePex)
+    localStorage.setItem('roundsWon', roundsWon)
   }
 
   render() {
