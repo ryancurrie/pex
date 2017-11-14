@@ -17,7 +17,6 @@ const io = IO(server)
 const lobbies = [new Lobby()]
 
 app.post('/api/createuser', jsonParser, async (req, res) => {
-  console.log(req.body.username)
   const created = await new User(req.body.username)
   res.status(201).json(created)
 })
