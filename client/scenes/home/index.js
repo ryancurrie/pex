@@ -1,10 +1,13 @@
 import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
+import { Redirect } from 'react-router-dom'
 import axios from 'axios'
 
 export default class Home extends Component {
   constructor(props) {
     super(props)
+    this.state = {
+      username: false
+    }
     this.handleSubmit = this.handleSubmit.bind(this)
   }
 
@@ -20,9 +23,11 @@ export default class Home extends Component {
     localStorage.setItem('pinkPex', pinkPex)
     localStorage.setItem('bluePex', bluePex)
     localStorage.setItem('roundsWon', roundsWon)
+    this.setState({ username: true })
   }
 
   render() {
+    const { username } = this.state
     return (
       <div>
         <form onSubmit={this.handleSubmit}>
@@ -39,14 +44,13 @@ export default class Home extends Component {
           </div>
           <div className="row">
             <div className="col text-center">
-              <Link replace to="/lobbies">
-                <button type="submit" className="btn btn-primary">
-                  Enter
-                </button>
-              </Link>
+              <button type="submit" className="btn btn-primary">
+                Enter
+              </button>
             </div>
           </div>
         </form>
+        {username && <Redirect to={'/lobbies'} />}
       </div>
     )
   }
