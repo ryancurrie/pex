@@ -40,8 +40,8 @@ io.on('connect', socket => {
     lobbies[0].playerLeave(username)
   })
 
-  socket.on('disconnect', () => {
-    lobbies[0].playerLeave(socket.id)
+  socket.on('disconnect', ({ username }) => {
+    lobbies[0].playerLeave(username)
   })
 
   socket.on('get-lobby', () => {

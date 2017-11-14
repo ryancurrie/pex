@@ -14,22 +14,22 @@ module.exports = class Lobby {
     this.updates = []
   }
 
-  playerJoin(id) {
-    this.lobbyPlayers.push(id)
+  playerJoin(username) {
+    this.lobbyPlayers.push(username)
     const update = {
       id: shortid.generate(),
-      msg: `${id} joined the room`
+      msg: `${username} joined the room`
     }
     this.updates.push(update)
     this.io.in(this.lobbySlug).emit('playerJoin', update)
   }
 
-  playerLeave(id) {
-    const index = this.lobbyPlayers.indexOf(id)
+  playerLeave(username) {
+    const index = this.lobbyPlayers.indexOf(username)
     if (index > -1) {
       const update = {
         id: shortid.generate(),
-        msg: `${id} has left the room`
+        msg: `${username} has left the room`
       }
       this.lobbyPlayers.splice(index, 1)
       this.updates.push(update)
