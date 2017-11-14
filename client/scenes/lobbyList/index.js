@@ -23,7 +23,11 @@ export default class Lobbies extends Component {
       return (
         <div className="col text-center">
           <div className="row" style={styles}>
-            <span>Choose a lobby</span>
+            <div className="col text-center">
+              <span>{`Welcome ${localStorage.getItem(
+                'username'
+              )} choose a lobby`}</span>
+            </div>
           </div>
           <div className="row">
             <LobbyList lobbies={this.state.lobbies} />

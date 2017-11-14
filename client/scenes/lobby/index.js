@@ -18,10 +18,14 @@ export default class Lobby extends Component {
       jackpot: 0
     }
     this.socket = SocketIOClient('http://localhost:3000')
+    this.payload = {
+      room: this.state.room,
+      username: localStorage.getItem('username')
+    }
   }
 
   componentDidMount() {
-    this.socket.emit('join', this.state.room)
+    this.socket.emit('join', this.payload)
     this.socket.emit('get-lobby', this.state.room)
     this.socket.on('return-lobby', lobby => {
       this.setState({ lobby: lobby, updates: lobby.updates })
@@ -35,7 +39,7 @@ export default class Lobby extends Component {
   }
 
   componentWillUnmount() {
-    this.socket.emit('leave', this.state.room)
+    this.socket.emit('leave', this.payload)
   }
 
   render() {

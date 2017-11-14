@@ -2,12 +2,14 @@ const path = require('path')
 const express = require('express')
 const IO = require('socket.io')
 const http = require('http')
-const shortid = require('shortid')
+const bodyParser = require('body-parser')
+const User = require('./scripts/user')
 const Lobby = require('./scripts/lobby')
 
 const app = express()
 
 app.use(express.static(path.join(__dirname, 'public')))
+const jsonParser = bodyParser.json()
 
 const server = http.createServer(app)
 const io = IO(server)
@@ -18,23 +20,28 @@ app.get('/api/lobbies', (req, res) => {
   res.json(lobbies)
 })
 
+app.post('/api/createuser', jsonParser, async (req, res) => {
+  const created = await new User(req.body.username)
+  res.status(201).json(created)
+})
+
 io.on('connect', socket => {
   socket.on('get-lobbies', () => {
     socket.emit('return-lobbies', lobbies)
   })
 
-  socket.on('join', room => {
+  socket.on('join', ({ room, username }) => {
     socket.join(room)
-    lobbies[0].playerJoin(socket.id)
+    lobbies[0].playerJoin(username)
   })
 
-  socket.on('leave', room => {
+  socket.on('leave', ({ room, username }) => {
     socket.leave(room)
-    lobbies[0].playerLeave(socket.id)
+    lobbies[0].playerLeave(username)
   })
 
-  socket.on('disconnect', () => {
-    lobbies[0].playerLeave(socket.id)
+  socket.on('disconnect', ({ username }) => {
+    lobbies[0].playerLeave(username)
   })
 
   socket.on('get-lobby', () => {
