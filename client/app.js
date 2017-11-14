@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Route } from 'react-router-dom'
 import Header from './components/header'
+import Home from './scenes/home/index.js'
 import Lobbies from './scenes/lobbyList/index.js'
 
 export default class App extends Component {
@@ -8,6 +9,7 @@ export default class App extends Component {
     return (
       <div>
         <Header />
+        <Route path="/" component={Home} />
         <Route path="/lobbies" component={Lobbies} />
       </div>
     )
