@@ -71,6 +71,7 @@ const styles = {
   },
   updates: {
     height: '300px',
+    width: 'auto',
     marginBottom: '1.5em',
     overflowY: 'scroll',
     overflowScrolling: 'touch',
