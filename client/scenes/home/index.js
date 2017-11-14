@@ -1,7 +1,13 @@
 import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
 import axios from 'axios'
 
 export default class Home extends Component {
+  constructor(props) {
+    super(props)
+    this.handleSubmit = this.handleSubmit.bind(this)
+  }
+
   async handleSubmit(e) {
     e.preventDefault()
     const formData = new FormData(e.target)
@@ -32,9 +38,11 @@ export default class Home extends Component {
             </div>
           </div>
           <div className="row">
-            <button type="submit" className="btn btn-primary">
-              Enter
-            </button>
+            <Link replace to="/lobbies">
+              <button type="submit" className="btn btn-primary">
+                Enter
+              </button>
+            </Link>
           </div>
         </form>
       </div>
