@@ -26,8 +26,8 @@ export default class Home extends Component {
     return (
       <div>
         <form onSubmit={this.handleSubmit}>
-          <div className="row">
-            <div className="form-group">
+          <div className="row" style={styles.form}>
+            <div className="form-group col-sm-6 offset-sm-3 text-center">
               <label htmlFor="username">Username</label>
               <input
                 type="text"
@@ -38,14 +38,22 @@ export default class Home extends Component {
             </div>
           </div>
           <div className="row">
-            <Link replace to="/lobbies">
-              <button type="submit" className="btn btn-primary">
-                Enter
-              </button>
-            </Link>
+            <div className="col text-center">
+              <Link replace to="/lobbies">
+                <button type="submit" className="btn btn-primary">
+                  Enter
+                </button>
+              </Link>
+            </div>
           </div>
         </form>
       </div>
     )
+  }
+}
+
+const styles = {
+  form: {
+    marginTop: '3em'
   }
 }
