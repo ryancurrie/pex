@@ -1,13 +1,14 @@
 import React, { Component } from 'react'
+import axios from 'axios'
 
 export default class Home extends Component {
-  handleSubmit(e) {
+  async handleSubmit(e) {
     e.preventDefault()
     const formData = new FormData(e.target)
-    const data = {
+    const response = await axios.post('/api/createuser', {
       username: formData.get('username')
-    }
-    console.log(JSON.stringify(data))
+    })
+    console.log(response.data)
   }
 
   render() {
