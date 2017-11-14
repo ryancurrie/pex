@@ -21,7 +21,12 @@ export default class Lobby extends Component {
   }
 
   componentDidMount() {
-    this.socket.emit('join', this.state.room)
+    const payload = {
+      room: this.state.room,
+      username: localStorage.getItem('username')
+    }
+    console.log(payload)
+    this.socket.emit('join', payload)
     this.socket.emit('get-lobby', this.state.room)
     this.socket.on('return-lobby', lobby => {
       this.setState({ lobby: lobby, updates: lobby.updates })
@@ -36,6 +41,7 @@ export default class Lobby extends Component {
 
   componentWillUnmount() {
     this.socket.emit('leave', this.state.room)
+    this.socket.emit('disconnect')
   }
 
   render() {

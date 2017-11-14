@@ -30,14 +30,14 @@ io.on('connect', socket => {
     socket.emit('return-lobbies', lobbies)
   })
 
-  socket.on('join', room => {
+  socket.on('join', ({ room, username }) => {
     socket.join(room)
-    lobbies[0].playerJoin(socket.id)
+    lobbies[0].playerJoin(username)
   })
 
-  socket.on('leave', room => {
+  socket.on('leave', ({ room, username }) => {
     socket.leave(room)
-    lobbies[0].playerLeave(socket.id)
+    lobbies[0].playerLeave(username)
   })
 
   socket.on('disconnect', () => {
