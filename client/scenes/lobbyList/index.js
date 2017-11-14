@@ -1,29 +1,22 @@
 import React, { Component } from 'react'
-import SocketIOClient from 'socket.io-client'
 import LobbyList from './components/lobby-list'
 
 export default class Lobbies extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      lobbies: null,
-      lobbiesLoaded: false
+      lobbies: []
     }
-    this.socket = SocketIOClient('http://localhost:3000')
   }
 
-  componentDidMount() {
-    this.socket.emit('get-lobbies')
-    this.socket.on('return-lobbies', lob => {
-      this.setState({
-        lobbies: lob,
-        lobbiesLoaded: true
-      })
-    })
+  async componentDidMount() {
+    const response = await fetch('/api/lobbies')
+    const lobbies = await response.json()
+    this.setState({ lobbies: lobbies })
   }
 
   render() {
-    if (!this.state.lobbiesLoaded) {
+    if (!this.state.lobbies.length) {
       return null
     }
     else {
