@@ -5,7 +5,8 @@
   "main": "server/index.js",
   "scripts": {
     "watch:server": "nodemon .",
-    "watch:client": "watchify client/index.js -t babelify -o server/public/main.js"
+    "watch:client":
+      "watchify client/index.js -t babelify -o server/public/main.js"
   },
   "repository": {
     "type": "git",
@@ -24,7 +25,6 @@
     "path": "^0.12.7",
     "project-name-generator": "^2.1.4",
     "react": "^16.0.0",
-    "react-chatview": "^0.2.4",
     "react-dom": "^16.0.0",
     "react-router-dom": "^4.2.2",
     "shortid": "^2.2.8",
