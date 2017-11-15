@@ -6,7 +6,10 @@
   "scripts": {
     "watch:server": "nodemon .",
     "watch:client":
-      "watchify client/index.js -g cssify -t babelify -o server/public/main.js"
+      "watchify client/index.js -g cssify -t babelify -o server/public/main.js",
+    "bundle":
+      "browserify client/index.js -g cssify -t babelify -o server/public/main.js",
+    "heroku-postbuild": "npm run bundle"
   },
   "repository": {
     "type": "git",
@@ -21,6 +24,7 @@
   "homepage": "https://github.com/ryancurrie/pex#readme",
   "dependencies": {
     "axios": "^0.17.1",
+    "dotenv": "^4.0.0",
     "express": "^4.16.2",
     "lodash": "^4.17.4",
     "path": "^0.12.7",

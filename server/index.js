@@ -1,3 +1,4 @@
+require('dotenv').config()
 const path = require('path')
 const express = require('express')
 const IO = require('socket.io')
@@ -53,6 +54,6 @@ io.on('connect', socket => {
   })
 })
 
-server.listen(3000, () => {
+server.listen(process.env.PORT, () => {
   console.log('Port 3000')
 })
