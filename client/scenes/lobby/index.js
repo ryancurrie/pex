@@ -36,6 +36,15 @@ export default class Lobby extends Component {
     this.socket.on('playerLeave', update => {
       this.setState({ updates: this.state.updates.concat(update) })
     })
+    this.socket.on('round-start', update => {
+      this.setState({ updates: this.state.updates.concat(update) })
+    })
+    this.socket.on('alert-new-round', update => {
+      this.setState({ updates: this.state.updates.concat(update) })
+    })
+    this.socket.on('time-left', update => {
+      this.setState({ timeLeft: update })
+    })
   }
 
   componentWillUnmount() {
