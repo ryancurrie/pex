@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import SocketIOClient from 'socket.io-client'
 import { upperCase } from 'lodash'
+import Alert from 'react-s-alert'
 import TimeLeft from './components/time-left'
 import Jackpot from './components/jackpot'
 import LobbyUpdates from './components/lobby-updates'
@@ -61,7 +62,14 @@ export default class Lobby extends Component {
     const userPex = Number(localStorage.getItem('pinkPex'))
     const amount = Number(formData.get('enterPex'))
     if (amount > userPex) {
-      console.log('fail')
+      Alert.error('<center>Not enough pex!</center>', {
+        position: 'top',
+        effect: 'jelly',
+        html: true,
+        beep: false,
+        timeout: 2000,
+        offset: 0
+      })
     }
     else {
       const wager = {
