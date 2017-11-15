@@ -47,6 +47,12 @@ export default class Lobby extends Component {
     this.socket.on('time-left', update => {
       this.setState({ timeLeft: update })
     })
+    this.socket.on('current-jackpot', update => {
+      this.setState({ jackpot: update })
+    })
+    this.socket.on('announce-jackpot', update => {
+      this.setState({ updates: this.state.updates.concat(update) })
+    })
     this.socket.on('announce-bid', update => {
       this.setState({ updates: this.state.updates.concat(update) })
     })
