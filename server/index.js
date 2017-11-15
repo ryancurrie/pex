@@ -49,7 +49,6 @@ io.on('connect', socket => {
   })
 
   socket.on('enter-pex', wager => {
-    console.log(wager)
     lobbies[0].enterPex(wager)
   })
 })

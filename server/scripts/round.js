@@ -38,12 +38,14 @@ module.exports = class Round {
   }
 
   acceptPex(wager) {
-    console.log(wager)
     this.jackpot += wager.amount
     this.pool.push(wager)
     for (let i = 0; i < wager.amount; i++) {
       this.raffle.push(wager.player)
     }
-    console.log(`${wager.player} Just Bid ${wager.amount}`)
+    this.io.in(this.lobbyName).emit('announce-bid', {
+      id: shortid.generate(),
+      msg: `${wager.player} Just Bid ${wager.amount}`
+    })
   }
 }
