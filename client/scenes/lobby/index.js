@@ -19,7 +19,7 @@ export default class Lobby extends Component {
       jackpot: 0,
       modalIsOpen: false
     }
-    this.socket = SocketIOClient('http://localhost:3000')
+    this.socket = SocketIOClient('/')
     this.payload = {
       room: this.state.room,
       username: localStorage.getItem('username')
