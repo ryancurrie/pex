@@ -16,7 +16,8 @@ export default class Lobby extends Component {
       lobby: {},
       updates: [],
       timeLeft: null,
-      jackpot: 0
+      jackpot: 0,
+      modalIsOpen: false
     }
     this.socket = SocketIOClient('http://localhost:3000')
     this.payload = {
@@ -66,6 +67,22 @@ export default class Lobby extends Component {
         const newBalance = userPex + award
         localStorage.setItem('pinkPex', newBalance)
       }
+      Alert.info(
+        `
+        <div class="text-center">
+          <h3>Round Complete!</h3>
+          <h4>${winner} Wins</h4>
+          <h4>Jackpot ${award}</h4>
+        </div>`,
+        {
+          position: 'top',
+          effect: 'jelly',
+          html: true,
+          beep: false,
+          timeout: 2000,
+          offset: 250
+        }
+      )
     })
   }
 
@@ -79,14 +96,20 @@ export default class Lobby extends Component {
     const userPex = Number(localStorage.getItem('pinkPex'))
     const amount = Number(formData.get('enterPex'))
     if (amount > userPex) {
-      Alert.error('<center>Not enough pex!</center>', {
-        position: 'top',
-        effect: 'jelly',
-        html: true,
-        beep: false,
-        timeout: 2000,
-        offset: 0
-      })
+      Alert.error(
+        `
+      <div class="text-center">
+        <h3>Not enough Pex!</h3>
+      </div>`,
+        {
+          position: 'top',
+          effect: 'jelly',
+          html: true,
+          beep: false,
+          timeout: 2000,
+          offset: 250
+        }
+      )
     }
     else {
       const wager = {
