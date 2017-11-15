@@ -1,6 +1,9 @@
 {
   "name": "pex",
   "version": "1.0.0",
+  "engines": {
+    "node": "8.8.0"
+  },
   "description": "A real time time sweepstakes web app",
   "main": "server/index.js",
   "scripts": {
