@@ -47,6 +47,11 @@ io.on('connect', socket => {
   socket.on('get-lobby', () => {
     socket.emit('return-lobby', lobbies[0])
   })
+
+  socket.on('enter-pex', wager => {
+    console.log(wager)
+    lobbies[0].enterPex(wager)
+  })
 })
 
 server.listen(3000, () => {
