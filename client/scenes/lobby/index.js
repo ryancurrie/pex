@@ -56,6 +56,17 @@ export default class Lobby extends Component {
     this.socket.on('announce-bid', update => {
       this.setState({ updates: this.state.updates.concat(update) })
     })
+    this.socket.on('announce-winner', update => {
+      this.setState({ updates: this.state.updates.concat(update) })
+    })
+    this.socket.on('award-player', ({ winner, award }) => {
+      const player = localStorage.getItem('username')
+      const userPex = Number(localStorage.getItem('pinkPex'))
+      if (winner === player) {
+        const newBalance = userPex + award
+        localStorage.setItem('pinkPex', newBalance)
+      }
+    })
   }
 
   componentWillUnmount() {

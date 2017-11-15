@@ -6,7 +6,7 @@ module.exports = class Round {
   constructor(io, lobbyName) {
     this.io = io
     this.lobbyName = lobbyName
-    this.timer = Timr('00:01:30')
+    this.timer = Timr('00:0:20')
     this.jackpot = 0
     this.raffle = []
   }
@@ -19,8 +19,12 @@ module.exports = class Round {
       id: shortid.generate(),
       msg: `And the winner is ${winner}! Jackpot ${this.jackpot}`
     })
-    this.io.in(this.lobbyName).emit()
-    console.log()
+    this.io.in(this.lobbyName).emit('award-player', {
+      award: this.jackpot,
+      winner: winner
+    })
+    this.jackpot = 0
+    this.raffle = []
   }
 
   startRound() {
@@ -64,13 +68,12 @@ module.exports = class Round {
             msg: 'A new round has begun!'
           })
           this.timer.start()
-        }, 20000)
+        }, 2000)
       })
   }
 
   acceptPex(wager) {
     this.jackpot += wager.amount
-    this.pool.push(wager)
     for (let i = 0; i < wager.amount; i++) {
       this.raffle.push(wager.player)
     }
