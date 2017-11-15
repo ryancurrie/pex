@@ -2,6 +2,7 @@ const uuid = require('uuid/v4')
 const shortid = require('shortid')
 const generate = require('project-name-generator')
 const _ = require('lodash')
+const Round = require('./round')
 
 module.exports = class Lobby {
   constructor(io) {
@@ -12,6 +13,11 @@ module.exports = class Lobby {
     this.lobbySlug = _.kebabCase(this.lobbyName)
     this.lobbyPlayers = []
     this.updates = []
+    this.round = new Round(this.io, this.lobbySlug)
+    this.init = function () {
+      this.round.startRound()
+    }
+    this.init()
   }
 
   playerJoin(username) {
