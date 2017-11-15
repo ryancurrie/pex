@@ -22,6 +22,7 @@ export default class Lobby extends Component {
       room: this.state.room,
       username: localStorage.getItem('username')
     }
+    this.handleSubmit = this.handleSubmit.bind(this)
   }
 
   componentDidMount() {
@@ -54,6 +55,10 @@ export default class Lobby extends Component {
     this.socket.emit('leave', this.payload)
   }
 
+  handleSubmit(e) {
+    e.preventDefault()
+  }
+
   render() {
     return (
       <div>
@@ -73,9 +78,7 @@ export default class Lobby extends Component {
             <LobbyUpdates updates={this.state.updates} />
           </div>
         </div>
-        <div className="row">
-          <LobbyFooter />
-        </div>
+        <LobbyFooter pex={localStorage.getItem('pinkPex')} />
       </div>
     )
   }
