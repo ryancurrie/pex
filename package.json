@@ -7,6 +7,7 @@
   "description": "A real time time sweepstakes web app",
   "main": "server/index.js",
   "scripts": {
+    "start": "node server/index.js",
     "watch:server": "nodemon .",
     "watch:client":
       "watchify client/index.js -g cssify -t babelify -o server/public/main.js",
