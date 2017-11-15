@@ -57,6 +57,21 @@ export default class Lobby extends Component {
 
   handleSubmit(e) {
     e.preventDefault()
+    const formData = new FormData(e.target)
+    const userPex = Number(localStorage.getItem('pinkPex'))
+    const amount = Number(formData.get('enterPex'))
+    if (amount > userPex) {
+      console.log('fail')
+    }
+    else {
+      const wager = {
+        player: localStorage.getItem('username'),
+        amount: amount
+      }
+      const balance = userPex - amount
+      localStorage.setItem('pinkPex', balance)
+      this.socket.emit('enter-pex', wager)
+    }
   }
 
   render() {
@@ -78,7 +93,10 @@ export default class Lobby extends Component {
             <LobbyUpdates updates={this.state.updates} />
           </div>
         </div>
-        <LobbyFooter pex={localStorage.getItem('pinkPex')} />
+        <LobbyFooter
+          pex={localStorage.getItem('pinkPex')}
+          handleSubmit={this.handleSubmit}
+        />
       </div>
     )
   }
