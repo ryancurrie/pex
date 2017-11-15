@@ -24,19 +24,19 @@ module.exports = class Round {
           case 33:
             this.io.in(this.lobbyName).emit('announce-jackpot', {
               id: shortid.generate(),
-              msg: `1 minute left, current jackpot: ${this.jackpot}`
+              msg: `1 minute left! Current jackpot: ${this.jackpot}`
             })
             break
           case 66:
             this.io.in(this.lobbyName).emit('announce-jackpot', {
               id: shortid.generate(),
-              msg: `30 seconds left, current jackpot: ${this.jackpot}`
+              msg: `30 seconds left! Current jackpot: ${this.jackpot}`
             })
             break
           case 89:
             this.io.in(this.lobbyName).emit('announce-jackpot', {
               id: shortid.generate(),
-              msg: `10 seconds left, current jackpot: ${this.jackpot}`
+              msg: `10 seconds left! Current jackpot: ${this.jackpot}`
             })
         }
       })
@@ -45,7 +45,7 @@ module.exports = class Round {
         const idBegin = shortid.generate()
         this.io.in(this.lobbyName).emit('alert-new-round', {
           id: idWill,
-          msg: 'New round will begin in 2 seconds!'
+          msg: 'New round will begin in 20 seconds!'
         })
         setTimeout(() => {
           this.io.in(this.lobbyName).emit('round-start', {
@@ -53,7 +53,7 @@ module.exports = class Round {
             msg: 'A new round has begun!'
           })
           this.timer.start()
-        }, 2000)
+        }, 20000)
       })
   }
 
@@ -65,7 +65,7 @@ module.exports = class Round {
     }
     this.io.in(this.lobbyName).emit('announce-bid', {
       id: shortid.generate(),
-      msg: `${wager.player} Just bid ${wager.amount}`
+      msg: `${wager.player} just bid ${wager.amount}`
     })
   }
 }
