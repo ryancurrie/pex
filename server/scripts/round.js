@@ -5,7 +5,7 @@ module.exports = class Round {
   constructor(io, lobbyName) {
     this.io = io
     this.lobbyName = lobbyName
-    this.timer = Timr('00:00:16')
+    this.timer = Timr('00:01:30')
     this.pool = []
     this.jackpot = 0
     this.raffle = []
@@ -17,9 +17,28 @@ module.exports = class Round {
       .emit('round-start', { msg: 'A new round has begun!' })
     this.timer
       .start()
-      .ticker(({ formattedTime }) => {
+      .ticker(({ formattedTime, percentDone }) => {
         this.io.in(this.lobbyName).emit('time-left', formattedTime)
         this.io.in(this.lobbyName).emit('current-jackpot', this.jackpot)
+        switch (percentDone) {
+          case 33:
+            this.io.in(this.lobbyName).emit('announce-jackpot', {
+              id: shortid.generate(),
+              msg: `1 minute left, current jackpot: ${this.jackpot}`
+            })
+            break
+          case 66:
+            this.io.in(this.lobbyName).emit('announce-jackpot', {
+              id: shortid.generate(),
+              msg: `30 seconds left, current jackpot: ${this.jackpot}`
+            })
+            break
+          case 89:
+            this.io.in(this.lobbyName).emit('announce-jackpot', {
+              id: shortid.generate(),
+              msg: `10 seconds left, current jackpot: ${this.jackpot}`
+            })
+        }
       })
       .finish(self => {
         const idWill = shortid.generate()
@@ -46,7 +65,7 @@ module.exports = class Round {
     }
     this.io.in(this.lobbyName).emit('announce-bid', {
       id: shortid.generate(),
-      msg: `${wager.player} Just Bid ${wager.amount}`
+      msg: `${wager.player} Just bid ${wager.amount}`
     })
   }
 }
