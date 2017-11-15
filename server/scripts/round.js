@@ -6,6 +6,9 @@ module.exports = class Round {
     this.io = io
     this.lobbyName = lobbyName
     this.timer = Timr('00:00:16')
+    this.pool = []
+    this.jackpot = 0
+    this.raffle = []
   }
 
   startRound() {
@@ -32,5 +35,17 @@ module.exports = class Round {
           this.timer.start()
         }, 2000)
       })
+  }
+
+  acceptPex(wager) {
+    this.jackpot += wager.amount
+    this.pool.push(wager)
+    for (let i = 0; i < wager.amount; i++) {
+      this.raffle.push(wager.player)
+    }
+    this.io.in(this.lobbyName).emit('announce-bid', {
+      id: shortid.generate(),
+      msg: `${wager.player} Just Bid ${wager.amount}`
+    })
   }
 }

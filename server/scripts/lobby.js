@@ -43,6 +43,10 @@ module.exports = class Lobby {
     }
   }
 
+  enterPex(wager) {
+    this.round.acceptPex(wager)
+  }
+
   toJSON() {
     return {
       id: this.id,

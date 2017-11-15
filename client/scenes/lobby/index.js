@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import SocketIOClient from 'socket.io-client'
 import { upperCase } from 'lodash'
+import Alert from 'react-s-alert'
 import TimeLeft from './components/time-left'
 import Jackpot from './components/jackpot'
 import LobbyUpdates from './components/lobby-updates'
@@ -22,6 +23,7 @@ export default class Lobby extends Component {
       room: this.state.room,
       username: localStorage.getItem('username')
     }
+    this.handleSubmit = this.handleSubmit.bind(this)
   }
 
   componentDidMount() {
@@ -45,10 +47,39 @@ export default class Lobby extends Component {
     this.socket.on('time-left', update => {
       this.setState({ timeLeft: update })
     })
+    this.socket.on('announce-bid', update => {
+      this.setState({ updates: this.state.updates.concat(update) })
+    })
   }
 
   componentWillUnmount() {
     this.socket.emit('leave', this.payload)
+  }
+
+  handleSubmit(e) {
+    e.preventDefault()
+    const formData = new FormData(e.target)
+    const userPex = Number(localStorage.getItem('pinkPex'))
+    const amount = Number(formData.get('enterPex'))
+    if (amount > userPex) {
+      Alert.error('<center>Not enough pex!</center>', {
+        position: 'top',
+        effect: 'jelly',
+        html: true,
+        beep: false,
+        timeout: 2000,
+        offset: 0
+      })
+    }
+    else {
+      const wager = {
+        player: localStorage.getItem('username'),
+        amount: amount
+      }
+      const balance = userPex - amount
+      localStorage.setItem('pinkPex', balance)
+      this.socket.emit('enter-pex', wager)
+    }
   }
 
   render() {
@@ -70,9 +101,10 @@ export default class Lobby extends Component {
             <LobbyUpdates updates={this.state.updates} />
           </div>
         </div>
-        <div className="row">
-          <LobbyFooter />
-        </div>
+        <LobbyFooter
+          pex={localStorage.getItem('pinkPex')}
+          handleSubmit={this.handleSubmit}
+        />
       </div>
     )
   }
