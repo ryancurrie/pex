@@ -19,6 +19,7 @@ module.exports = class Round {
       .start()
       .ticker(({ formattedTime }) => {
         this.io.in(this.lobbyName).emit('time-left', formattedTime)
+        this.io.in(this.lobbyName).emit('current-jackpot', this.jackpot)
       })
       .finish(self => {
         const idWill = shortid.generate()
