@@ -68,7 +68,7 @@ module.exports = class Round {
             msg: 'A new round has begun!'
           })
           this.timer.start()
-        }, 2000)
+        }, 20000)
       })
   }
 
