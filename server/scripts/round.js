@@ -6,7 +6,7 @@ module.exports = class Round {
   constructor(io, lobbyName) {
     this.io = io
     this.lobbyName = lobbyName
-    this.timer = Timr('00:0:20')
+    this.timer = Timr('00:1:30')
     this.jackpot = 0
     this.raffle = []
   }
