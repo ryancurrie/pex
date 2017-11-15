@@ -1,12 +1,28 @@
 const shortid = require('shortid')
 const Timr = require('timrjs')
+const _ = require('lodash')
 
 module.exports = class Round {
   constructor(io, lobbyName) {
     this.io = io
     this.lobbyName = lobbyName
-    this.timer = Timr('00:01:30')
-    this.pool = []
+    this.timer = Timr('00:0:20')
+    this.jackpot = 0
+    this.raffle = []
+  }
+
+  pickWinner() {
+    const length = this.raffle.length
+    const random = _.random(length)
+    const winner = this.raffle[random]
+    this.io.in(this.lobbyName).emit('announce-winner', {
+      id: shortid.generate(),
+      msg: `And the winner is ${winner}! Jackpot ${this.jackpot}`
+    })
+    this.io.in(this.lobbyName).emit('award-player', {
+      award: this.jackpot,
+      winner: winner
+    })
     this.jackpot = 0
     this.raffle = []
   }
@@ -41,25 +57,23 @@ module.exports = class Round {
         }
       })
       .finish(self => {
-        const idWill = shortid.generate()
-        const idBegin = shortid.generate()
+        this.pickWinner()
         this.io.in(this.lobbyName).emit('alert-new-round', {
-          id: idWill,
+          id: shortid.generate(),
           msg: 'New round will begin in 20 seconds!'
         })
         setTimeout(() => {
           this.io.in(this.lobbyName).emit('round-start', {
-            id: idBegin,
+            id: shortid.generate(),
             msg: 'A new round has begun!'
           })
           this.timer.start()
-        }, 20000)
+        }, 2000)
       })
   }
 
   acceptPex(wager) {
     this.jackpot += wager.amount
-    this.pool.push(wager)
     for (let i = 0; i < wager.amount; i++) {
       this.raffle.push(wager.player)
     }
