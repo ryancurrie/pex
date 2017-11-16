@@ -9,6 +9,7 @@ module.exports = class Round {
     this.timer = Timr('00:01:30')
     this.jackpot = 0
     this.raffle = []
+    this.pool = []
     this.open = true
   }
 
@@ -26,6 +27,7 @@ module.exports = class Round {
     })
     this.jackpot = 0
     this.raffle = []
+    this.pool = []
   }
 
   startRound() {
@@ -75,17 +77,41 @@ module.exports = class Round {
       })
   }
 
+  tally() {
+    return this.pool.reduce((acc, element) => {
+      const calculatedTotal =
+        (acc[element.player] ? acc[element.player].total : 0) + element.amount
+      acc[element.player] = {
+        player: element.player,
+        total: calculatedTotal,
+        odds: Math.round(calculatedTotal / this.jackpot * 100) + '%'
+      }
+      return acc
+    }, {})
+  }
+
+  findPlayer(player) {
+    const leaders = this.tally()
+    return _.find(leaders, { player: player })
+  }
+
   acceptPex(wager) {
     if (!this.open) {
       this.io.in(this.lobbyName).emit('round-closed')
     }
     this.jackpot += wager.amount
+    this.pool.push(wager)
     for (let i = 0; i < wager.amount; i++) {
       this.raffle.push(wager.player)
     }
+
+    const player = this.findPlayer(wager.player)
+    const { total, odds } = player
+
     this.io.in(this.lobbyName).emit('announce-bid', {
       id: shortid.generate(),
-      msg: `${wager.player} just bid ${wager.amount}`
+      msg: `${wager.player} just bid ${wager.amount}`,
+      sub: `Total: ${total} Chance to win: ${odds}`
     })
   }
 }
