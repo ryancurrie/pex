@@ -27,7 +27,7 @@ module.exports = class Lobby {
       msg: `${username} joined the room`
     }
     this.updates.push(update)
-    this.io.in(this.lobbySlug).emit('playerJoin', update)
+    this.io.in(this.lobbySlug).emit('update', update)
   }
 
   playerLeave(username) {
@@ -39,7 +39,7 @@ module.exports = class Lobby {
       }
       this.lobbyPlayers.splice(index, 1)
       this.updates.push(update)
-      this.io.in(this.lobbySlug).emit('playerLeave', update)
+      this.io.in(this.lobbySlug).emit('update', update)
     }
   }
 

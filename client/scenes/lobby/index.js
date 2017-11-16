@@ -33,10 +33,7 @@ export default class Lobby extends Component {
     this.socket.on('return-lobby', lobby => {
       this.setState({ lobby: lobby, updates: lobby.updates })
     })
-    this.socket.on('playerJoin', update => {
-      this.setState({ updates: this.state.updates.concat(update) })
-    })
-    this.socket.on('playerLeave', update => {
+    this.socket.on('update', update => {
       this.setState({ updates: this.state.updates.concat(update) })
     })
     this.socket.on('round-start', update => {
@@ -44,6 +41,19 @@ export default class Lobby extends Component {
         updates: this.state.updates.concat(update),
         roundIsOpen: true
       })
+      Alert.info(
+        `<div class="text-center">
+  <h2>A new round has begun!</h2>
+      </div>`,
+        {
+          position: 'top',
+          effect: 'jelly',
+          html: true,
+          beep: false,
+          timeout: 2000,
+          offset: 250
+        }
+      )
     })
     this.socket.on('alert-new-round', update => {
       this.setState({
@@ -57,15 +67,6 @@ export default class Lobby extends Component {
     this.socket.on('current-jackpot', update => {
       this.setState({ jackpot: update })
     })
-    this.socket.on('announce-jackpot', update => {
-      this.setState({ updates: this.state.updates.concat(update) })
-    })
-    this.socket.on('announce-bid', update => {
-      this.setState({ updates: this.state.updates.concat(update) })
-    })
-    this.socket.on('announce-winner', update => {
-      this.setState({ updates: this.state.updates.concat(update) })
-    })
     this.socket.on('award-player', ({ winner, award }) => {
       const player = localStorage.getItem('username')
       const userPex = Number(localStorage.getItem('pinkPex'))
@@ -73,22 +74,19 @@ export default class Lobby extends Component {
         const newBalance = userPex + award
         localStorage.setItem('pinkPex', newBalance)
       }
-      let announcement
-      if (!winner) {
-        announcement = `<div class="text-center">
-        <h3>Round Complete!</h3>
-        <h3>No Winner This Round</h3>
-      </div>`
-      }
-      else {
-        announcement = `
-      <div class="text-center">
-        <h3>Round Complete!</h3>
-        <h4>${winner} Wins</h4>
-        <h4>Jackpot ${award}</h4>
-      </div>`
-      }
-      Alert.info(announcement, {
+      const winnerMessage = `
+        <div class="text-center">
+          <h3>Round Complete!</h3>
+          <h4>${winner} Wins</h4>
+          <h4>Jackpot ${award}</h4>
+        </div>`
+      const noWinner = `
+        <div class="text-center">
+          <h3>Round Complete!</h3>
+          <h3>No Winner This Round</h3>
+        </div>`
+
+      Alert.info(winner ? winnerMessage : noWinner, {
         position: 'top',
         effect: 'jelly',
         html: true,
@@ -96,22 +94,6 @@ export default class Lobby extends Component {
         timeout: 2000,
         offset: 250
       })
-    })
-    this.socket.on('round-closed', () => {
-      Alert.error(
-        `
-      <div class="text-center">
-        <h3>Round is not open!</h3>
-      </div>`,
-        {
-          position: 'top',
-          effect: 'jelly',
-          html: true,
-          beep: false,
-          timeout: 2000,
-          offset: 250
-        }
-      )
     })
   }
 
@@ -124,37 +106,24 @@ export default class Lobby extends Component {
     const formData = new FormData(e.target)
     const userPex = Number(localStorage.getItem('pinkPex'))
     const amount = Number(formData.get('enterPex'))
-    if (amount > userPex) {
-      Alert.error(
-        `
-      <div class="text-center">
-        <h3>Not enough Pex!</h3>
-      </div>`,
-        {
-          position: 'top',
-          effect: 'jelly',
-          html: true,
-          beep: false,
-          timeout: 2000,
-          offset: 250
-        }
-      )
-    }
-    if (!this.state.roundIsOpen) {
-      Alert.error(
-        `
-      <div class="text-center">
-        <h3>Round not open!</h3>
-      </div>`,
-        {
-          position: 'top',
-          effect: 'jelly',
-          html: true,
-          beep: false,
-          timeout: 2000,
-          offset: 250
-        }
-      )
+
+    if (!this.state.roundIsOpen || amount > userPex) {
+      const notEnough = `
+    <div class="text-center">
+      <h3>Not enough Pex!</h3>
+    </div>`
+      const roundClosed = `
+    <div class="text-center">
+      <h3>Round not open!</h3>
+    </div>`
+      Alert.error(this.state.roundIsOpen ? notEnough : roundClosed, {
+        position: 'top',
+        effect: 'jelly',
+        html: true,
+        beep: false,
+        timeout: 2000,
+        offset: 250
+      })
     }
     else {
       const wager = {
