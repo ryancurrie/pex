@@ -30,6 +30,19 @@ module.exports = class Round {
     this.pool = []
   }
 
+  getWarning(percent) {
+    switch (percent) {
+      case 33:
+        return '1 minute left!'
+      case 66:
+        return '30 seconds left!'
+      case 89:
+        return '10 seconds left!'
+      default:
+        return null
+    }
+  }
+
   startRound() {
     this.io
       .in(this.lobbyName)
@@ -39,25 +52,12 @@ module.exports = class Round {
       .ticker(({ formattedTime, percentDone }) => {
         this.io.in(this.lobbyName).emit('time-left', formattedTime)
         this.io.in(this.lobbyName).emit('current-jackpot', this.jackpot)
-        switch (percentDone) {
-          case 33:
-            this.io.in(this.lobbyName).emit('update', {
-              id: shortid.generate(),
-              msg: `1 minute left! Current jackpot: ${this.jackpot}`
-            })
-            break
-          case 66:
-            this.io.in(this.lobbyName).emit('update', {
-              id: shortid.generate(),
-              msg: `30 seconds left! Current jackpot: ${this.jackpot}`
-            })
-            break
-          case 89:
-            this.io.in(this.lobbyName).emit('update', {
-              id: shortid.generate(),
-              msg: `10 seconds left! Current jackpot: ${this.jackpot}`
-            })
-        }
+        const msg = this.getWarning(percentDone)
+        if (!msg) return
+        this.io.in(this.lobbyName).emit('update', {
+          id: shortid.generate(),
+          msg
+        })
       })
       .finish(self => {
         this.open = false
