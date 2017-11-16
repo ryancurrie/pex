@@ -17,7 +17,7 @@ export default class Lobby extends Component {
       updates: [],
       timeLeft: null,
       jackpot: 0,
-      modalIsOpen: false
+      roundIsOpen: true
     }
     this.socket = SocketIOClient('/')
     this.payload = {
@@ -40,10 +40,16 @@ export default class Lobby extends Component {
       this.setState({ updates: this.state.updates.concat(update) })
     })
     this.socket.on('round-start', update => {
-      this.setState({ updates: this.state.updates.concat(update) })
+      this.setState({
+        updates: this.state.updates.concat(update),
+        roundIsOpen: true
+      })
     })
     this.socket.on('alert-new-round', update => {
-      this.setState({ updates: this.state.updates.concat(update) })
+      this.setState({
+        updates: this.state.updates.concat(update),
+        roundIsOpen: false
+      })
     })
     this.socket.on('time-left', update => {
       this.setState({ timeLeft: update })
@@ -91,6 +97,22 @@ export default class Lobby extends Component {
         offset: 250
       })
     })
+    this.socket.on('round-closed', () => {
+      Alert.error(
+        `
+      <div class="text-center">
+        <h3>Round is not open!</h3>
+      </div>`,
+        {
+          position: 'top',
+          effect: 'jelly',
+          html: true,
+          beep: false,
+          timeout: 2000,
+          offset: 250
+        }
+      )
+    })
   }
 
   componentWillUnmount() {
@@ -107,6 +129,22 @@ export default class Lobby extends Component {
         `
       <div class="text-center">
         <h3>Not enough Pex!</h3>
+      </div>`,
+        {
+          position: 'top',
+          effect: 'jelly',
+          html: true,
+          beep: false,
+          timeout: 2000,
+          offset: 250
+        }
+      )
+    }
+    if (!this.state.roundIsOpen) {
+      Alert.error(
+        `
+      <div class="text-center">
+        <h3>Round not open!</h3>
       </div>`,
         {
           position: 'top',
