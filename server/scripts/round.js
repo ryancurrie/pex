@@ -17,7 +17,7 @@ module.exports = class Round {
     const length = this.raffle.length
     const random = _.random(length)
     const winner = this.raffle[random]
-    this.io.in(this.lobbyName).emit('announce-winner', {
+    this.io.in(this.lobbyName).emit('update', {
       id: shortid.generate(),
       msg: `And the winner is ${winner}! Jackpot ${this.jackpot}`
     })
@@ -41,19 +41,19 @@ module.exports = class Round {
         this.io.in(this.lobbyName).emit('current-jackpot', this.jackpot)
         switch (percentDone) {
           case 33:
-            this.io.in(this.lobbyName).emit('announce-jackpot', {
+            this.io.in(this.lobbyName).emit('update', {
               id: shortid.generate(),
               msg: `1 minute left! Current jackpot: ${this.jackpot}`
             })
             break
           case 66:
-            this.io.in(this.lobbyName).emit('announce-jackpot', {
+            this.io.in(this.lobbyName).emit('update', {
               id: shortid.generate(),
               msg: `30 seconds left! Current jackpot: ${this.jackpot}`
             })
             break
           case 89:
-            this.io.in(this.lobbyName).emit('announce-jackpot', {
+            this.io.in(this.lobbyName).emit('update', {
               id: shortid.generate(),
               msg: `10 seconds left! Current jackpot: ${this.jackpot}`
             })
@@ -108,7 +108,7 @@ module.exports = class Round {
     const player = this.findPlayer(wager.player)
     const { total, odds } = player
 
-    this.io.in(this.lobbyName).emit('announce-bid', {
+    this.io.in(this.lobbyName).emit('update', {
       id: shortid.generate(),
       msg: `${wager.player} just bid ${wager.amount}`,
       sub: `Total: ${total} Chance to win: ${odds}`
