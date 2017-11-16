@@ -39,6 +39,7 @@ export default class Home extends Component {
                 className="form-control"
                 name="username"
                 id="username"
+                required
               />
             </div>
           </div>
