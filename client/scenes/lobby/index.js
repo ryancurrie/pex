@@ -67,22 +67,29 @@ export default class Lobby extends Component {
         const newBalance = userPex + award
         localStorage.setItem('pinkPex', newBalance)
       }
-      Alert.info(
-        `
-        <div class="text-center">
-          <h3>Round Complete!</h3>
-          <h4>${winner} Wins</h4>
-          <h4>Jackpot ${award}</h4>
-        </div>`,
-        {
-          position: 'top',
-          effect: 'jelly',
-          html: true,
-          beep: false,
-          timeout: 2000,
-          offset: 250
-        }
-      )
+      let announcement
+      if (!winner) {
+        announcement = `<div class="text-center">
+        <h3>Round Complete!</h3>
+        <h3>No Winner This Round</h3>
+      </div>`
+      }
+      else {
+        announcement = `
+      <div class="text-center">
+        <h3>Round Complete!</h3>
+        <h4>${winner} Wins</h4>
+        <h4>Jackpot ${award}</h4>
+      </div>`
+      }
+      Alert.info(announcement, {
+        position: 'top',
+        effect: 'jelly',
+        html: true,
+        beep: false,
+        timeout: 2000,
+        offset: 250
+      })
     })
   }
 
