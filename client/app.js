@@ -7,10 +7,14 @@ import Welcome from './scenes/welcome/index.js'
 import Lobbies from './scenes/lobbyList/index.js'
 import Lobby from './scenes/lobby/index.js'
 
+const styles = {
+  fontFamily: 'Roboto, sans-serif'
+}
+
 export default class App extends Component {
   render() {
     return (
-      <div>
+      <div style={styles}>
         <Header />
         <Route exact path="/" component={Home} />
         <Route path="/welcome" component={Welcome} />
