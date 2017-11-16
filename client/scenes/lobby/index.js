@@ -112,37 +112,24 @@ export default class Lobby extends Component {
     const formData = new FormData(e.target)
     const userPex = Number(localStorage.getItem('pinkPex'))
     const amount = Number(formData.get('enterPex'))
-    if (amount > userPex) {
-      Alert.error(
-        `
-      <div class="text-center">
-        <h3>Not enough Pex!</h3>
-      </div>`,
-        {
-          position: 'top',
-          effect: 'jelly',
-          html: true,
-          beep: false,
-          timeout: 2000,
-          offset: 250
-        }
-      )
-    }
-    if (!this.state.roundIsOpen) {
-      Alert.error(
-        `
-      <div class="text-center">
-        <h3>Round not open!</h3>
-      </div>`,
-        {
-          position: 'top',
-          effect: 'jelly',
-          html: true,
-          beep: false,
-          timeout: 2000,
-          offset: 250
-        }
-      )
+
+    if (!this.state.roundIsOpen || amount > userPex) {
+      const notEnough = `
+    <div class="text-center">
+      <h3>Not enough Pex!</h3>
+    </div>`
+      const roundClosed = `
+    <div class="text-center">
+      <h3>Round not open!</h3>
+    </div>`
+      Alert.error(this.state.roundIsOpen ? notEnough : roundClosed, {
+        position: 'top',
+        effect: 'jelly',
+        html: true,
+        beep: false,
+        timeout: 2000,
+        offset: 250
+      })
     }
     else {
       const wager = {
