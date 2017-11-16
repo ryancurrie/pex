@@ -50,7 +50,7 @@ export default class Home extends Component {
             </div>
           </div>
         </form>
-        {username && <Redirect to={'/lobbies'} />}
+        {username && <Redirect to={'/welcome'} />}
       </div>
     )
   }
