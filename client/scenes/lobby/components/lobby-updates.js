@@ -1,8 +1,9 @@
 import React from 'react'
 
-const renderUpdate = ({ id, msg }) => (
+const renderUpdate = ({ id, msg, sub }) => (
   <li className="list-group-item" key={id}>
-    {msg}
+    <div>{msg}</div>
+    <div style={styles.sub}>{sub}</div>
   </li>
 )
 
@@ -20,3 +21,9 @@ const LobbyUpdates = ({ updates }) => {
 }
 
 module.exports = LobbyUpdates
+
+const styles = {
+  sub: {
+    fontSize: '.75em'
+  }
+}
