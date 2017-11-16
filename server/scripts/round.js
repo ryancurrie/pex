@@ -6,9 +6,10 @@ module.exports = class Round {
   constructor(io, lobbyName) {
     this.io = io
     this.lobbyName = lobbyName
-    this.timer = Timr('00:1:30')
+    this.timer = Timr('00:01:30')
     this.jackpot = 0
     this.raffle = []
+    this.open = true
   }
 
   pickWinner() {
@@ -57,6 +58,7 @@ module.exports = class Round {
         }
       })
       .finish(self => {
+        this.open = false
         this.pickWinner()
         this.io.in(this.lobbyName).emit('alert-new-round', {
           id: shortid.generate(),
@@ -67,12 +69,16 @@ module.exports = class Round {
             id: shortid.generate(),
             msg: 'A new round has begun!'
           })
+          this.open = true
           this.timer.start()
         }, 20000)
       })
   }
 
   acceptPex(wager) {
+    if (!this.open) {
+      this.io.in(this.lobbyName).emit('round-closed')
+    }
     this.jackpot += wager.amount
     for (let i = 0; i < wager.amount; i++) {
       this.raffle.push(wager.player)
