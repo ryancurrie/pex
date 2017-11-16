@@ -33,10 +33,7 @@ export default class Lobby extends Component {
     this.socket.on('return-lobby', lobby => {
       this.setState({ lobby: lobby, updates: lobby.updates })
     })
-    this.socket.on('playerJoin', update => {
-      this.setState({ updates: this.state.updates.concat(update) })
-    })
-    this.socket.on('playerLeave', update => {
+    this.socket.on('update', update => {
       this.setState({ updates: this.state.updates.concat(update) })
     })
     this.socket.on('round-start', update => {
