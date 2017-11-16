@@ -41,6 +41,19 @@ export default class Lobby extends Component {
         updates: this.state.updates.concat(update),
         roundIsOpen: true
       })
+      Alert.info(
+        `<div class="text-center">
+  <h2>A new round has begun!</h2>
+      </div>`,
+        {
+          position: 'top',
+          effect: 'jelly',
+          html: true,
+          beep: false,
+          timeout: 2000,
+          offset: 250
+        }
+      )
     })
     this.socket.on('alert-new-round', update => {
       this.setState({
@@ -61,22 +74,19 @@ export default class Lobby extends Component {
         const newBalance = userPex + award
         localStorage.setItem('pinkPex', newBalance)
       }
-      let announcement
-      if (!winner) {
-        announcement = `<div class="text-center">
-        <h3>Round Complete!</h3>
-        <h3>No Winner This Round</h3>
-      </div>`
-      }
-      else {
-        announcement = `
-      <div class="text-center">
-        <h3>Round Complete!</h3>
-        <h4>${winner} Wins</h4>
-        <h4>Jackpot ${award}</h4>
-      </div>`
-      }
-      Alert.info(announcement, {
+      const winnerMessage = `
+        <div class="text-center">
+          <h3>Round Complete!</h3>
+          <h4>${winner} Wins</h4>
+          <h4>Jackpot ${award}</h4>
+        </div>`
+      const noWinner = `
+        <div class="text-center">
+          <h3>Round Complete!</h3>
+          <h3>No Winner This Round</h3>
+        </div>`
+
+      Alert.info(winner ? winnerMessage : noWinner, {
         position: 'top',
         effect: 'jelly',
         html: true,
