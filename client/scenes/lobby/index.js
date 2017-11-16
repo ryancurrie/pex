@@ -95,22 +95,6 @@ export default class Lobby extends Component {
         offset: 250
       })
     })
-    this.socket.on('round-closed', () => {
-      Alert.error(
-        `
-      <div class="text-center">
-        <h3>Round is not open!</h3>
-      </div>`,
-        {
-          position: 'top',
-          effect: 'jelly',
-          html: true,
-          beep: false,
-          timeout: 2000,
-          offset: 250
-        }
-      )
-    })
   }
 
   componentWillUnmount() {
