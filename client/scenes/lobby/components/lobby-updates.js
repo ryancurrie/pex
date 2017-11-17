@@ -1,4 +1,5 @@
 import React from 'react'
+import Transition from 'react-motion-ui-pack'
 
 const renderUpdate = ({ id, msg, sub }) => (
   <li style={pexActivityListItem} key={id}>
@@ -12,10 +13,16 @@ const LobbyUpdates = ({ updates }) => {
     <div className="panel panel-default">
       <div className="text-muted">Activity</div>
       <ul style={pexActivityList}>
-        {updates
-          .slice()
-          .reverse()
-          .map(renderUpdate)}
+        <Transition
+          enter={{
+            opacity: 1
+          }}
+        >
+          {updates
+            .slice()
+            .reverse()
+            .map(renderUpdate)}
+        </Transition>
       </ul>
     </div>
   )
