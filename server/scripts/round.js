@@ -6,7 +6,7 @@ module.exports = class Round {
   constructor(io, lobbyName) {
     this.io = io
     this.lobbyName = lobbyName
-    this.timer = Timr('00:1:30')
+    this.timer = Timr('00:00:10')
     this.jackpot = 0
     this.raffle = []
     this.pool = []
@@ -15,15 +15,28 @@ module.exports = class Round {
 
   pickWinner() {
     const length = this.raffle.length
-    const random = _.random(length)
-    const winner = this.raffle[random]
+    const random = _.random(0, length - 1)
+    const winningPlayer = this.raffle[random]
+    if (!winningPlayer) {
+      this.jackpot = 0
+      this.raffle = []
+      this.pool = []
+      return this.io.in(this.lobbyName).emit('award-player', {
+        award: this.jackpot,
+        winner: null,
+        id: null
+      })
+    }
+    const winner = winningPlayer.player
+    const id = winningPlayer.id
     this.io.in(this.lobbyName).emit('update', {
       id: shortid.generate(),
       msg: `And the winner is ${winner}! Jackpot ${this.jackpot}`
     })
     this.io.in(this.lobbyName).emit('award-player', {
       award: this.jackpot,
-      winner: winner
+      winner: winner,
+      id: id
     })
     this.jackpot = 0
     this.raffle = []
@@ -73,15 +86,16 @@ module.exports = class Round {
           })
           this.open = true
           this.timer.start()
-        }, 20000)
+        }, 2000)
       })
   }
 
   tally() {
     return this.pool.reduce((acc, element) => {
       const calculatedTotal =
-        (acc[element.player] ? acc[element.player].total : 0) + element.amount
-      acc[element.player] = {
+        (acc[element.id] ? acc[element.id].total : 0) + element.amount
+      acc[element.id] = {
+        id: element.id,
         player: element.player,
         total: calculatedTotal,
         odds: Math.round(calculatedTotal / this.jackpot * 100) + '%'
@@ -90,9 +104,9 @@ module.exports = class Round {
     }, {})
   }
 
-  findPlayer(player) {
+  findPlayer(id) {
     const leaders = this.tally()
-    return _.find(leaders, { player: player })
+    return _.find(leaders, { id: id })
   }
 
   acceptPex(wager) {
@@ -100,11 +114,11 @@ module.exports = class Round {
       this.jackpot += wager.amount
       this.pool.push(wager)
       for (let i = 0; i < wager.amount; i++) {
-        this.raffle.push(wager.player)
+        this.raffle.push(wager)
       }
     }
 
-    const player = this.findPlayer(wager.player)
+    const player = this.findPlayer(wager.id)
     const { total, odds } = player
 
     this.io.in(this.lobbyName).emit('update', {
