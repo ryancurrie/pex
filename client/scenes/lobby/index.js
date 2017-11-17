@@ -68,7 +68,6 @@ export default class Lobby extends Component {
       this.setState({ jackpot: update })
     })
     this.socket.on('award-player', ({ winner, award, id }) => {
-      console.log(id, winner)
       const checkId = localStorage.getItem('id')
       const userPex = Number(localStorage.getItem('pinkPex'))
       if (id === checkId) {
@@ -133,7 +132,6 @@ export default class Lobby extends Component {
         player: localStorage.getItem('username'),
         amount: amount
       }
-      console.log(wager)
       const balance = userPex - amount
       localStorage.setItem('pinkPex', balance)
       this.socket.emit('enter-pex', wager)
