@@ -13,12 +13,11 @@ const Header = () => {
 module.exports = Header
 
 const styles = {
-  marginTop: '1em',
-  marginBottom: '1.5em'
+  marginTop: '2em'
 }
 
 const logoStyle = {
-  fontSize: '3em',
+  fontSize: '1.8em',
   fontWeight: '100',
   textIndent: '15px',
   letterSpacing: '15px',

@@ -10,6 +10,10 @@ body {
   background-image: linear-gradient(180deg, #341b51, #0e1843);
 }
 
+a {
+  color: inherit;
+}
+
 .pex-button {
   height: 3.5em;
   width: 100%;
@@ -29,4 +33,10 @@ body {
   text-decoration: none;
   cursor: pointer;
   border-radius: 0;
+}
+
+.pex-button:hover {
+  border-color: transparent;
+  background-color: rgba(178, 68, 206, 0.35);
+  box-shadow: 0 10px 30px 0 rgba(20, 13, 13, 0.35);
 }

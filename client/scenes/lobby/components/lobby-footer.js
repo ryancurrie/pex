@@ -4,36 +4,34 @@ import { Link } from 'react-router-dom'
 const LobbyFooter = props => {
   return (
     <div>
-      <div className="row justify-content-md-center justify-content-sm-center">
-        <div
-          className="col-md-auto justify-content-sm-center text-center"
-          style={styles.column}
-        >
-          <form className="form-inline" onSubmit={props.handleSubmit}>
-            <div className="mx-sm-3">
+      <div className="row justify-content-center">
+        <h6>{`Pex: ${props.pex}`}</h6>
+      </div>
+      <form onSubmit={props.handleSubmit}>
+        <div className="row justify-content-center">
+          <div className="w-50">
+            <div className="form-group">
               <input
                 name="enterPex"
                 type="number"
                 placeholder="Enter Pex"
                 className="form-control"
+                style={styles.input}
               />
             </div>
-            <div>
-              <button className="btn btn-primary">Go</button>
-            </div>
-          </form>
+          </div>
         </div>
-      </div>
-      <div className="row">
-        <div className="col float-left">
-          <span className="float-left">
-            <Link to={{ pathname: '/lobbies' }}>Leave Lobby</Link>
-          </span>
+        <div className="row justify-content-center" style={styles.column}>
+          <div className="w-50">
+            <button className="pex-button">Place bet</button>
+          </div>
         </div>
-        <div className="col">
-          <span className="float-right">{`Pex: ${props.pex}`}</span>
+        <div className="float-left">
+          <Link to={{ pathname: '/lobbies' }} style={styles.leave}>
+            Leave Lobby
+          </Link>
         </div>
-      </div>
+      </form>
     </div>
   )
 }
@@ -41,6 +39,15 @@ const LobbyFooter = props => {
 const styles = {
   column: {
     marginBottom: '1.5em'
+  },
+  input: {
+    borderRadius: '0',
+    height: '3.5em'
+  },
+  leave: {
+    color: '8B819D',
+    fontSize: '.9em',
+    textDecoration: 'none'
   }
 }
 

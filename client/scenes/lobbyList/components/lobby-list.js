@@ -28,6 +28,7 @@ const styles = {
     fontWeight: '400',
     width: '100%',
     border: '2px solid #615bb1',
+    borderRadius: '0',
     backgroundColor: 'rgba(178, 68, 206, .15)',
     transition: 'all 300ms ease-in-out',
     letterSpacing: '0.2em',
