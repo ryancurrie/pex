@@ -6,7 +6,7 @@ module.exports = class Round {
   constructor(io, lobbyName) {
     this.io = io
     this.lobbyName = lobbyName
-    this.timer = Timr('00:01:30')
+    this.timer = Timr('00:1:30')
     this.jackpot = 0
     this.raffle = []
     this.pool = []
@@ -17,7 +17,7 @@ module.exports = class Round {
     const length = this.raffle.length
     const random = _.random(length)
     const winner = this.raffle[random]
-    this.io.in(this.lobbyName).emit('announce-winner', {
+    this.io.in(this.lobbyName).emit('update', {
       id: shortid.generate(),
       msg: `And the winner is ${winner}! Jackpot ${this.jackpot}`
     })
@@ -30,6 +30,19 @@ module.exports = class Round {
     this.pool = []
   }
 
+  getWarning(percent) {
+    switch (percent) {
+      case 33:
+        return '1 minute left!'
+      case 66:
+        return '30 seconds left!'
+      case 89:
+        return '10 seconds left!'
+      default:
+        return null
+    }
+  }
+
   startRound() {
     this.io
       .in(this.lobbyName)
@@ -39,25 +52,12 @@ module.exports = class Round {
       .ticker(({ formattedTime, percentDone }) => {
         this.io.in(this.lobbyName).emit('time-left', formattedTime)
         this.io.in(this.lobbyName).emit('current-jackpot', this.jackpot)
-        switch (percentDone) {
-          case 33:
-            this.io.in(this.lobbyName).emit('announce-jackpot', {
-              id: shortid.generate(),
-              msg: `1 minute left! Current jackpot: ${this.jackpot}`
-            })
-            break
-          case 66:
-            this.io.in(this.lobbyName).emit('announce-jackpot', {
-              id: shortid.generate(),
-              msg: `30 seconds left! Current jackpot: ${this.jackpot}`
-            })
-            break
-          case 89:
-            this.io.in(this.lobbyName).emit('announce-jackpot', {
-              id: shortid.generate(),
-              msg: `10 seconds left! Current jackpot: ${this.jackpot}`
-            })
-        }
+        const msg = this.getWarning(percentDone)
+        if (!msg) return
+        this.io.in(this.lobbyName).emit('update', {
+          id: shortid.generate(),
+          msg
+        })
       })
       .finish(self => {
         this.open = false
@@ -96,19 +96,18 @@ module.exports = class Round {
   }
 
   acceptPex(wager) {
-    if (!this.open) {
-      this.io.in(this.lobbyName).emit('round-closed')
-    }
-    this.jackpot += wager.amount
-    this.pool.push(wager)
-    for (let i = 0; i < wager.amount; i++) {
-      this.raffle.push(wager.player)
+    if (this.open) {
+      this.jackpot += wager.amount
+      this.pool.push(wager)
+      for (let i = 0; i < wager.amount; i++) {
+        this.raffle.push(wager.player)
+      }
     }
 
     const player = this.findPlayer(wager.player)
     const { total, odds } = player
 
-    this.io.in(this.lobbyName).emit('announce-bid', {
+    this.io.in(this.lobbyName).emit('update', {
       id: shortid.generate(),
       msg: `${wager.player} just bid ${wager.amount}`,
       sub: `Total: ${total} Chance to win: ${odds}`
