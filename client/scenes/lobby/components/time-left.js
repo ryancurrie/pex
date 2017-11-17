@@ -7,7 +7,6 @@ function underTenSeconds(time) {
   const breakup = time.split(':')
   const minutes = breakup[0]
   const seconds = breakup[1]
-  console.log(minutes === '00' && parseInt(seconds) <= 10)
   return minutes === '00' && parseInt(seconds) <= 10
 }
 

@@ -13,8 +13,8 @@ const LobbyUpdates = ({ updates }) => {
       <div className="text-muted">Activity</div>
       <ul style={pexActivityList}>
         {updates
+          .slice()
           .reverse()
-          .slice(0, 20)
           .map(renderUpdate)}
       </ul>
     </div>
