@@ -6,7 +6,7 @@ module.exports = class Round {
   constructor(io, lobbyName) {
     this.io = io
     this.lobbyName = lobbyName
-    this.timer = Timr('00:00:10')
+    this.timer = Timr('00:01:30')
     this.jackpot = 0
     this.raffle = []
     this.pool = []
@@ -86,7 +86,7 @@ module.exports = class Round {
           })
           this.open = true
           this.timer.start()
-        }, 2000)
+        }, 20000)
       })
   }
 
