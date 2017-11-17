@@ -9,8 +9,10 @@
   "scripts": {
     "start": "node server/index.js",
     "watch:server": "nodemon .",
-    "watch:client": "watchify client/index.js -g cssify -t babelify -o server/public/main.js",
-    "bundle": "browserify client/index.js -g cssify -t babelify -o server/public/main.js",
+    "watch:client":
+      "watchify client/index.js -g cssify -t babelify -o server/public/main.js",
+    "bundle":
+      "browserify client/index.js -g cssify -t babelify -o server/public/main.js",
     "heroku-postbuild": "npm run bundle"
   },
   "repository": {
@@ -32,10 +34,13 @@
     "path": "^0.12.7",
     "project-name-generator": "^2.1.4",
     "react": "^16.0.0",
+    "react-anime": "^2.0.1",
     "react-dom": "^16.0.0",
     "react-image": "^1.3.1",
+    "react-motion-ui-pack": "^0.10.3",
     "react-router-dom": "^4.2.2",
     "react-s-alert": "^1.3.2",
+    "react-transition-group": "^1.2.1",
     "shortid": "^2.2.8",
     "socket.io": "^2.0.4",
     "timrjs": "^1.0.1",
