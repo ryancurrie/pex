@@ -3,14 +3,15 @@ import { Link } from 'react-router-dom'
 
 const LobbyList = ({ lobbies }) => {
   return (
-    <div>
+    <div className="col">
       <ul className="list-group">
         {lobbies.map(({ lobbyName, lobbyPlayers, full, lobbyURI }, index) => {
           return (
-            <li className="list-group-item" key={index}>
-              <Link to={{ pathname: `/lobby${lobbyURI}` }}>
-                {`${lobbyName} - Active players:
-            ${lobbyPlayers.length} - Status: ` + (full ? 'Full' : 'Open')}
+            <li className="list-group-item" style={styles.listItem} key={index}>
+              <Link style={styles.link} to={{ pathname: `/lobby${lobbyURI}` }}>
+                <p>{lobbyName}</p>
+                <p>{`Active players: ${lobbyPlayers.length}`}</p>
+                <p>{`Status:  ` + (full ? 'Full' : 'Open')}</p>
               </Link>
             </li>
           )
@@ -21,3 +22,19 @@ const LobbyList = ({ lobbies }) => {
 }
 
 module.exports = LobbyList
+
+const styles = {
+  listItem: {
+    fontWeight: '400',
+    width: '100%',
+    border: '2px solid #615bb1',
+    backgroundColor: 'rgba(178, 68, 206, .15)',
+    transition: 'all 300ms ease-in-out',
+    letterSpacing: '0.2em',
+    textTransform: 'uppercase'
+  },
+  link: {
+    textDecoration: 'none',
+    color: '#fff'
+  }
+}

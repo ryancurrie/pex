@@ -21,12 +21,10 @@ export default class Lobbies extends Component {
     }
     else {
       return (
-        <div className="col text-center">
+        <div className="col-xs-12 col-sm-4 offset-sm-4 text-center">
           <div className="row" style={styles}>
-            <div className="col text-center">
-              <span>{`Welcome ${localStorage.getItem(
-                'username'
-              )} choose a lobby`}</span>
+            <div className="col">
+              <h2>Choose A Lobby</h2>
             </div>
           </div>
           <div className="row">
