@@ -7,7 +7,11 @@ const LobbyList = ({ lobbies }) => {
       <ul className="list-group">
         {lobbies.map(({ lobbyName, lobbyPlayers, full, lobbyURI }, index) => {
           return (
-            <li className="list-group-item" style={styles.listItem} key={index}>
+            <li
+              className="list-group-item pex-lobby-list-item"
+              style={styles.border}
+              key={index}
+            >
               <Link style={styles.link} to={{ pathname: `/lobby${lobbyURI}` }}>
                 <p>{lobbyName}</p>
                 <p>{`Active players: ${lobbyPlayers.length}`}</p>
@@ -24,17 +28,11 @@ const LobbyList = ({ lobbies }) => {
 module.exports = LobbyList
 
 const styles = {
-  listItem: {
-    fontWeight: '400',
-    width: '100%',
-    border: '2px solid #615bb1',
-    borderRadius: '0',
-    backgroundColor: 'rgba(178, 68, 206, .15)',
-    letterSpacing: '0.2em',
-    textTransform: 'uppercase'
-  },
   link: {
     textDecoration: 'none',
     color: '#fff'
+  },
+  border: {
+    borderRadius: '0'
   }
 }
