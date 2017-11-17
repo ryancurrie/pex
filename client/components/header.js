@@ -3,8 +3,8 @@ import React from 'react'
 const Header = () => {
   return (
     <div className="row" style={styles}>
-      <div className="col text-center">
-        <span className="navbar-brand">PEX</span>
+      <div className="col-xs-12 col-sm-4 offset-sm-4 text-center">
+        <p style={logoStyle}>PEX</p>
       </div>
     </div>
   )
@@ -13,6 +13,13 @@ const Header = () => {
 module.exports = Header
 
 const styles = {
-  marginTop: '1em',
-  marginBottom: '1.5em'
+  marginTop: '2em'
+}
+
+const logoStyle = {
+  fontSize: '1.8em',
+  fontWeight: '100',
+  textIndent: '15px',
+  letterSpacing: '15px',
+  color: '#fff'
 }

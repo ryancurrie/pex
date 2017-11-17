@@ -1,0 +1,42 @@
+html {
+  height: 100%;
+}
+
+body {
+  height: 100%;
+  margin: 0;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-image: linear-gradient(180deg, #341b51, #0e1843);
+}
+
+a {
+  color: inherit;
+}
+
+.pex-button {
+  height: 3.5em;
+  width: 100%;
+  border: 2px solid rgb(156, 125, 228);
+  background-color: transparent;
+  background-image: linear-gradient(
+    225deg,
+    rgba(178, 68, 206, 0.25),
+    transparent
+  );
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  display: inline-block;
+  padding: 9px 15px;
+  color: white;
+  line-height: inherit;
+  text-decoration: none;
+  cursor: pointer;
+  border-radius: 0;
+}
+
+.pex-button:hover {
+  border-color: transparent;
+  background-color: rgba(178, 68, 206, 0.35);
+  box-shadow: 0 10px 30px 0 rgba(20, 13, 13, 0.35);
+}

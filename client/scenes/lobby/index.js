@@ -139,26 +139,56 @@ export default class Lobby extends Component {
   render() {
     return (
       <div>
-        <div className="row" style={styles.column}>
-          <div className="col text-center">{upperCase(this.state.room)}</div>
-        </div>
-        <div className="row" style={styles.column}>
-          <div className="col float-left">
-            <TimeLeft time={this.state.timeLeft} />
+        <div className="row" style={styles.activityAndInfo}>
+          <div
+            className="col-xs-12 col-md-5 offset-md-2"
+            style={{ marginBottom: '50px' }}
+          >
+            <div className="row">
+              <div className="col">
+                <div className="text-muted">Lobby</div>
+                <h5>{upperCase(this.state.room)}</h5>
+              </div>
+            </div>
+
+            <div className="row">
+              <div className="col">
+                <TimeLeft time={this.state.timeLeft} />
+              </div>
+            </div>
+
+            <div className="row">
+              <div className="col">
+                <Jackpot jackpot={this.state.jackpot} />
+              </div>
+            </div>
+
+            <div className="row">
+              <div className="col">
+                <div className="text-muted">My Remaining Pex</div>
+                <h5
+                  style={
+                    localStorage.getItem('pinkPex') < 100
+                      ? { color: '#ff5555' }
+                      : {}
+                  }
+                >
+                  {localStorage.getItem('pinkPex')}
+                </h5>
+              </div>
+            </div>
+
+            <div className="row">
+              <div className="col">
+                <LobbyFooter handleSubmit={this.handleSubmit} />
+              </div>
+            </div>
           </div>
-          <div className="col">
-            <Jackpot jackpot={this.state.jackpot} />
-          </div>
-        </div>
-        <div className="row" style={styles.column}>
-          <div className="col text-center" style={styles.updates}>
+
+          <div className="col-xs-12 col-md-5">
             <LobbyUpdates updates={this.state.updates} />
           </div>
         </div>
-        <LobbyFooter
-          pex={localStorage.getItem('pinkPex')}
-          handleSubmit={this.handleSubmit}
-        />
       </div>
     )
   }

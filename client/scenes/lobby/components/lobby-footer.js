@@ -4,36 +4,22 @@ import { Link } from 'react-router-dom'
 const LobbyFooter = props => {
   return (
     <div>
-      <div className="row justify-content-md-center justify-content-sm-center">
-        <div
-          className="col-md-auto justify-content-sm-center text-center"
-          style={styles.column}
-        >
-          <form className="form-inline" onSubmit={props.handleSubmit}>
-            <div className="mx-sm-3">
-              <input
-                name="enterPex"
-                type="number"
-                placeholder="Enter Pex"
-                className="form-control"
-              />
-            </div>
-            <div>
-              <button className="btn btn-primary">Go</button>
-            </div>
-          </form>
+      <form onSubmit={props.handleSubmit}>
+        <div className="form-group">
+          <input
+            name="enterPex"
+            type="number"
+            placeholder="Enter Pex"
+            className="form-control"
+            style={styles.input}
+          />
         </div>
-      </div>
-      <div className="row">
-        <div className="col float-left">
-          <span className="float-left">
-            <Link to={{ pathname: '/lobbies' }}>Leave Lobby</Link>
-          </span>
+
+        <button className="pex-button">Place bet</button>
+        <div style={styles.leave}>
+          <Link to={{ pathname: '/lobbies' }}>Leave Lobby</Link>
         </div>
-        <div className="col">
-          <span className="float-right">{`Pex: ${props.pex}`}</span>
-        </div>
-      </div>
+      </form>
     </div>
   )
 }
@@ -41,6 +27,16 @@ const LobbyFooter = props => {
 const styles = {
   column: {
     marginBottom: '1.5em'
+  },
+  input: {
+    borderRadius: '0',
+    height: '3.5em'
+  },
+  leave: {
+    marginTop: '1em',
+    color: '8B819D',
+    fontSize: '.9em',
+    textDecoration: 'none'
   }
 }
 

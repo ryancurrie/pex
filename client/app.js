@@ -10,7 +10,7 @@ import Lobby from './scenes/lobby/index.js'
 export default class App extends Component {
   render() {
     return (
-      <div>
+      <div style={styles}>
         <Header />
         <Route exact path="/" component={Home} />
         <Route path="/welcome" component={Welcome} />
@@ -20,4 +20,11 @@ export default class App extends Component {
       </div>
     )
   }
+}
+
+const styles = {
+  fontFamily: 'Roboto, sans-serif',
+  fontWeight: '100',
+  letterSpacing: '.1em',
+  color: '#fff'
 }
