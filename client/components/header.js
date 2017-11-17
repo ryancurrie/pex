@@ -3,10 +3,8 @@ import React from 'react'
 const Header = () => {
   return (
     <div className="row" style={styles}>
-      <div className="col text-center">
-        <span className="navbar-brand" style={logoStyle}>
-          PEX
-        </span>
+      <div className="col-xs-12 col-sm-4 offset-sm-4 text-center">
+        <p style={logoStyle}>PEX</p>
       </div>
     </div>
   )
@@ -20,8 +18,9 @@ const styles = {
 }
 
 const logoStyle = {
-  fontSize: '2em',
+  fontSize: '3em',
   fontWeight: '100',
+  textIndent: '15px',
   letterSpacing: '15px',
   color: 'hsla(0, 0%, 100%, .45)'
 }

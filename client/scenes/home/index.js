@@ -67,7 +67,7 @@ export default class Home extends Component {
 
 const styles = {
   column: {
-    marginTop: '3em'
+    marginTop: '2em'
   },
   input: {
     borderRadius: '0',
