@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Redirect } from 'react-router-dom'
 import axios from 'axios'
+import Logo from './components/logo'
 
 export default class Home extends Component {
   constructor(props) {
@@ -30,22 +31,29 @@ export default class Home extends Component {
     const { username } = this.state
     return (
       <div>
-        <form onSubmit={this.handleSubmit}>
-          <div className="row" style={styles.form}>
-            <div className="form-group col-sm-6 offset-sm-3 text-center">
-              <label htmlFor="username">Username</label>
-              <input
-                type="text"
-                className="form-control"
-                name="username"
-                id="username"
-                required
-              />
-            </div>
+        <div className="row">
+          <div
+            className="col-xs-12 col-sm-4 offset-sm-4 text-center"
+            style={styles.column}
+          >
+            <Logo />
           </div>
+        </div>
+        <form onSubmit={this.handleSubmit} style={styles.column}>
           <div className="row">
-            <div className="col text-center">
-              <button type="submit" className="btn btn-primary">
+            <div className="col-xs-12 col-sm-4 offset-sm-4">
+              <div className="form-group">
+                <label htmlFor="username">Username</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  name="username"
+                  id="username"
+                  style={styles.input}
+                  required
+                />
+              </div>
+              <button type="submit" className="pex-button">
                 Enter
               </button>
             </div>
@@ -58,7 +66,11 @@ export default class Home extends Component {
 }
 
 const styles = {
-  form: {
+  column: {
     marginTop: '3em'
+  },
+  input: {
+    borderRadius: '0',
+    height: '3.5em'
   }
 }

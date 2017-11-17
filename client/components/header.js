@@ -20,11 +20,8 @@ const styles = {
 }
 
 const logoStyle = {
-  fontWeight: '900',
-  letterSpacing: '5px',
-  fontSize: '46px',
-  color: '#007bff',
-  border: '6px solid #007bff',
-  padding: '0px 20px',
-  backgroundColor: '#f3f3f3'
+  fontSize: '2em',
+  fontWeight: '100',
+  letterSpacing: '15px',
+  color: 'hsla(0, 0%, 100%, .45)'
 }

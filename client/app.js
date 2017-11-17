@@ -7,10 +7,6 @@ import Welcome from './scenes/welcome/index.js'
 import Lobbies from './scenes/lobbyList/index.js'
 import Lobby from './scenes/lobby/index.js'
 
-const styles = {
-  fontFamily: 'Roboto, sans-serif'
-}
-
 export default class App extends Component {
   render() {
     return (
@@ -24,4 +20,11 @@ export default class App extends Component {
       </div>
     )
   }
+}
+
+const styles = {
+  fontFamily: 'Roboto, sans-serif',
+  fontWeight: '100',
+  letterSpacing: '.1em',
+  color: '#fff'
 }
