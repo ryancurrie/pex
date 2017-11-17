@@ -67,10 +67,10 @@ export default class Lobby extends Component {
     this.socket.on('current-jackpot', update => {
       this.setState({ jackpot: update })
     })
-    this.socket.on('award-player', ({ winner, award }) => {
-      const player = localStorage.getItem('username')
+    this.socket.on('award-player', ({ winner, award, id }) => {
+      const checkId = localStorage.getItem('id')
       const userPex = Number(localStorage.getItem('pinkPex'))
-      if (winner === player) {
+      if (id === checkId) {
         const newBalance = userPex + award
         localStorage.setItem('pinkPex', newBalance)
       }
@@ -105,6 +105,7 @@ export default class Lobby extends Component {
     e.preventDefault()
     const formData = new FormData(e.target)
     const userPex = Number(localStorage.getItem('pinkPex'))
+    const userId = localStorage.getItem('id')
     const amount = Number(formData.get('enterPex'))
 
     if (!this.state.roundIsOpen || amount > userPex) {
@@ -127,6 +128,7 @@ export default class Lobby extends Component {
     }
     else {
       const wager = {
+        id: userId,
         player: localStorage.getItem('username'),
         amount: amount
       }
