@@ -43,5 +43,6 @@ const pexActivityListItem = {
   padding: '5px 10px',
   backgroundColor: 'rgba(178, 68, 206, .15)',
   borderBottom: '2px solid #615bb1',
-  textTransform: 'uppercase'
+  textTransform: 'uppercase',
+  textAlign: 'center'
 }

@@ -24,7 +24,7 @@ export default class Lobbies extends Component {
         <div className="col-xs-12 col-sm-4 offset-sm-4 text-center">
           <div className="row" style={styles}>
             <div className="col">
-              <h2>Choose A Lobby</h2>
+              <h3>Choose Lobby</h3>
             </div>
           </div>
           <div className="row">

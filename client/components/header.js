@@ -21,5 +21,5 @@ const logoStyle = {
   fontWeight: '100',
   textIndent: '15px',
   letterSpacing: '15px',
-  color: 'hsla(0, 0%, 100%, .45)'
+  color: '#fff'
 }
